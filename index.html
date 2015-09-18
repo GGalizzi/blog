@@ -8,7 +8,7 @@ lastmod: 2014-03-20T16:00:00-03:00
 ---
 
 <div id="home">
-  <h1>Artículos</h1>
+  <h1>Articles/Artículos</h1>
   <ul class="posts">
     {% for post in site.posts %}
     <li>
@@ -23,7 +23,7 @@ lastmod: 2014-03-20T16:00:00-03:00
         {% endfor %} <!-- categories -->
       </ul>
 
-        <a href="/blog{{ post.url }}">{{ post.title }}</a>
+        <a href="{{site.github.url}}{{ post.url }}">{{ post.title }}</a>
 
         <span class="meta">{{ post.date | date: "%-d/%m/%Y" }}</span> 
 
