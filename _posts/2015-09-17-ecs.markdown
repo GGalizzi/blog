@@ -1,0 +1,62 @@
+---
+layout: post
+title: "Entity Component System"
+date: 2015-09-17 16:00:00
+categories: rust roguelike gamedev ecs
+---
+
+The roguelike I'm currently working on uses an [Entity Component System](http://entity-systems.wikidot.com/) (ECS for short) which are becoming a lot more popular as of late, and for good reason.
+
+Using an ECS makes much more sense for game design, not only will your code be better modularized and organized, but it also opens up a lot of possibilities, and together with some imagination allow you to do a lot of interesting stuff.
+
+I'm gonna be talking about what I like about ECS, and how I use it / implement it.
+
+Also, I also use an Event / Observer pattern with my ECSs, which I've yet to see in other ECSs. I think this allow for even better decoupling (than ECS already offers), and I'll be talking about that also.
+
+###Quick intro
+
+Lets start by defining the three principal parts of an ECS, and then the fourth one I added, Events.
+
+####Entity
+
+To the program an Entity will just be an ID, you could implement it as some number, or an UUID, think it of as a primary key in a database, a fast way to access some data related to this id.
+
+An Entity will represent just about anything in the game, the player, an orc, a potion, a sword, a tree, maybe even things that can't be seen by the player, like a trigger zone that when you enter it, something happens.
+
+They *become* these things as you stuff them with components, entities are basically bags with components in them.
+
+####Component
+
+Entities *become* something by adding components to them, say an orc maybe has the components `position`, `sprite`, `health`, `stats`, `berserk_ai`.
+
+Each component has data in them, they are just plain old data structures, they have no logic directly associated with them, you don't implement methods on them (well, getter, setters and helper stuff of the sort is allowed, nothing much). So the `position` component probably just haves `x` and `y`, `health` has `current` and `max`, you get the idea.
+
+Some components probably don't even have data in them, they are just markers of some property an entity can have, say `Solid`, which marks something that blocks your way.
+
+And you can add or remove components to entities when you please.
+
+####Systems
+
+Systems (or as I preffer to call them, *Behaviors*) are where the logic goes, they define how a certain entity *behaves* depending on what components they have.
+
+An entity with `position` and `sprite` probably can't do much, except for being drawn, maybe its just some ground tile, but then you add some `trap` component and suddenly it becomes a dangerous piece of tile.
+
+Systems perform the logic if an entity has the required set of components, maybe there's even a list of forbidden components. Say the movement system needs a `position`, `sprite` and `movement` component, but if it has the `freezed` component then it just skips it.
+
+Some ECSs (my latest one included) also implement **families**, which is a quick way to categorize entities, and systems will grab entities that belong to some family.
+
+Say a `mob` family, something belongs to it if it has `stats` and `health`. And something belongs to the `tile` family if it has `position` and `sprite` but **not** the `stats` component.
+
+####Events
+
+Systems push and read events, that's how they interact with each other, some `input` system reads keyboard input and fires an event corresponding to what happens when you press that key, it doesn't care who's gonna need it.
+
+And you have a `movement` system which listens to those types of events, it doesn't *care* where they come from, maybe the `movement` event came from keyboard input, maybe it came from an ai, or from a potion or spell, why should it care? It just knows something has to move *there*.
+
+###Conclusion
+
+The decoupling an ECS allows is amazing, a lot of times when adding features you won't have to touch previous code, each system and each component becomes its own little world, caring nothing about the world around them.
+
+You no longer have to worry about crazy inheritance chains in OOP, just add components to your entities, implement behaviors and there ya go.
+
+Check out the [ecs wiki](http://entity-systems.wikidot.com/) for more info.
