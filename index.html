@@ -8,10 +8,9 @@ lastmod: 2014-03-20T16:00:00-03:00
 ---
 
 <div id="home">
-  <h1>Articles/Artículos</h1>
-  <ul class="posts">
+  <section class="posts">
     {% for post in site.posts %}
-    <li>
+    <article>
 
       <ul class="categories-in-post"> 
         {% for category in post.categories %}
@@ -23,13 +22,13 @@ lastmod: 2014-03-20T16:00:00-03:00
         {% endfor %} <!-- categories -->
       </ul>
 
-        <a href="{{site.github.url}}{{ post.url }}">{{ post.title }}</a>
+        <h2><a href="{{site.github.url}}{{ post.url }}">{{ post.title }}</a></h2>
 
         <span class="meta">{{ post.date | date: "%-d/%m/%Y" }}</span> 
 
         <div class="post"><p>{{ post.excerpt | strip_html }}</p></div>
 
-    </li>
+    </article>
     {% endfor %} <!-- post in posts -->
-  </ul>
+  </section>
 </div>

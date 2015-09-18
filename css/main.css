@@ -42,6 +42,10 @@ h1 { font-size: 1.992rem; margin-bottom: 2.618rem; text-align: center; line-heig
 
 h2 { font-size: 1.331rem; line-height: 1.5rem; margin-bottom: 1.75rem; }
 
+article h2 {
+    font-size: 1rem;
+}
+
 h3 {
   font-family: 'Oswald', Helvetica;
   font-weight: 400;
@@ -72,7 +76,7 @@ li li {
   margin-left: 1em;
 }
 
-.posts li li {
+.posts li {
   margin-left: 0;
 }
 
@@ -88,19 +92,25 @@ li li {
   text-align: center;
 }
 
-.posts a {
+.posts h2 a {
   font-family: 'Oswald', Helvetica;
   font-weight: 400;
   font-size: 1.6em;
   line-height: 1.2em;
   display: block;
+  text-transform: none;
+  margin-bottom: 0;
 }
 
-.posts li {
+.posts h2 { margin: 0; }
+
+.posts p {
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
-.posts > li {
-  margin-bottom: 3.5em;
+.posts > article {
+    margin-bottom: 1.2rem;
 }
 
 .categories {
@@ -126,6 +136,7 @@ li li {
   list-style: none;
   display: inline-block;
   color: #aaa;
+  margin-right: -4px;
 }
 
 .categories-in-post li span {
