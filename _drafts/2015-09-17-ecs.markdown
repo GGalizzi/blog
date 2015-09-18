@@ -17,7 +17,7 @@ Also, I also use an Event / Observer pattern with my ECSs, which I've yet to see
 
 Lets start by defining the three principal parts of an ECS, and then the fourth one I added, Events.
 
-##Entity
+####Entity
 
 To the program an Entity will just be an ID, you could implement it as some number, or an UUID, think it of as a primary key in a database, a fast way to access some data related to this id.
 
@@ -25,7 +25,7 @@ An Entity will represent just about anything in the game, the player, an orc, a 
 
 They *become* these things as you stuff them with components, entities are basically bags with components in them.
 
-##Component
+####Component
 
 Entities *become* something by adding components to them, say an orc maybe has the components `position`, `sprite`, `health`, `stats`, `berserk_ai`.
 
@@ -35,7 +35,7 @@ Some components probably don't even have data in them, they are just markers of 
 
 And you can add or remove components to entities when you please.
 
-##Systems
+####Systems
 
 Systems (or as I preffer to call them, *Behaviors*) are where the logic goes, they define how a certain entity *behaves* depending on what components they have.
 
@@ -47,9 +47,16 @@ Some ECSs (my latest one included) also implement **families**, which is a quick
 
 Say a `mob` family, something belongs to it if it has `stats` and `health`. And something belongs to the `tile` family if it has `position` and `sprite` but **not** the `stats` component.
 
-##Events
+####Events
 
 Systems push and read events, that's how they interact with each other, some `input` system reads keyboard input and fires an event corresponding to what happens when you press that key, it doesn't care who's gonna need it.
 
 And you have a `movement` system which listens to those types of events, it doesn't *care* where they come from, maybe the `movement` event came from keyboard input, maybe it came from an ai, or from a potion or spell, why should it care? It just knows something has to move *there*.
 
+###Conclusion
+
+The decoupling an ECS allows is amazing, a lot of times when adding features you won't have to touch previous code, each system and each component becomes its own little world, caring nothing about the world around them.
+
+You no longer have to worry about crazy inheritance chains in OOP, just add components to your entities, implement behaviors and there ya go.
+
+Check out the [ecs wiki](http://entity-systems.wikidot.com/) for more info.
