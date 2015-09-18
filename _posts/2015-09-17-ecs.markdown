@@ -13,11 +13,9 @@ I'm gonna be talking about what I like about ECS, and how I use it / implement i
 
 Also, I also use an Event / Observer pattern with my ECSs, which I've yet to see in other ECSs. I think this allow for even better decoupling (than ECS already offers), and I'll be talking about that also.
 
-###Quick intro
-
 Lets start by defining the three principal parts of an ECS, and then the fourth one I added, Events.
 
-####Entity
+###Entity
 
 To the program an Entity will just be an ID, you could implement it as some number, or an UUID, think it of as a primary key in a database, a fast way to access some data related to this id.
 
@@ -25,7 +23,7 @@ An Entity will represent just about anything in the game, the player, an orc, a 
 
 They *become* these things as you stuff them with components, entities are basically bags with components in them.
 
-####Component
+###Component
 
 Entities *become* something by adding components to them, say an orc maybe has the components `position`, `sprite`, `health`, `stats`, `berserk_ai`.
 
@@ -35,7 +33,7 @@ Some components probably don't even have data in them, they are just markers of 
 
 And you can add or remove components to entities when you please.
 
-####Systems
+###Systems
 
 Systems (or as I preffer to call them, *Behaviors*) are where the logic goes, they define how a certain entity *behaves* depending on what components they have.
 
@@ -47,7 +45,7 @@ Some ECSs (my latest one included) also implement **families**, which is a quick
 
 Say a `mob` family, something belongs to it if it has `stats` and `health`. And something belongs to the `tile` family if it has `position` and `sprite` but **not** the `stats` component.
 
-####Events
+###Events
 
 Systems push and read events, that's how they interact with each other, some `input` system reads keyboard input and fires an event corresponding to what happens when you press that key, it doesn't care who's gonna need it.
 
